@@ -4,8 +4,7 @@ import Keyboard from './components/Keyboard'
 import { use, useState } from 'react'
 
 function App() {
-  const[text, setText] = useState<string[]>([])  
-  const[entered, setEntered] = useState<boolean>(false)
+  const[text, setText] = useState<string[]>([]) 
   const[currentRow, setCurrentRow] = useState<number>(0)
   const [allRows, setAllRows] = useState<string[][]>([
   [], [], [], [], []
