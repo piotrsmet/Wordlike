@@ -1,6 +1,4 @@
 
-
-
 export const IsKeyValid = {
     UNKNOWN: "unknown",
     PARTLY_VALID: "partly_valid",
@@ -17,9 +15,15 @@ interface KeyProps{
 
 
 export function Key({value, passValue, keyValidation}: KeyProps){
-    let keyStyle = "p-2 m-1 cursor-pointer"
+    let keyStyle = "p-1 m-1 cursor-pointer text-[90%] w-[8%] aspect-square"
     if(keyValidation == IsKeyValid.VALID){
         keyStyle = keyStyle.concat(" bg-green-600")
+    }
+    else if(keyValidation == IsKeyValid.PARTLY_VALID){
+        keyStyle = keyStyle.concat(" bg-orange-500")
+    }
+    else if(keyValidation == IsKeyValid.NOT_VALID){
+        keyStyle = keyStyle.concat(" bg-gray-700")
     }
     else{
         keyStyle = keyStyle.concat(" bg-gray-500")

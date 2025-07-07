@@ -33,7 +33,23 @@
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-.flip-card:hover .flip-card-inner {
+.delay1{
+  transition-delay: 200ms;
+}
+
+.delay2{
+  transition-delay: 400ms;
+}
+
+.delay3{
+  transition-delay: 600ms;
+}
+
+.delay4{
+  transition-delay: 800ms;
+}
+
+.flip-card-inner-flip {
   transform: rotateY(180deg);
 }
 
@@ -51,7 +67,6 @@
 }
 
 .flip-card-back {
-  background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
 }
