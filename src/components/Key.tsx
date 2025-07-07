@@ -15,22 +15,19 @@ interface KeyProps{
 
 
 export function Key({value, passValue, keyValidation}: KeyProps){
-    let keyStyle = "p-1 m-1 cursor-pointer text-[90%] w-[8%] aspect-square"
-    if(keyValidation == IsKeyValid.VALID){
-        keyStyle = keyStyle.concat(" bg-green-600")
-    }
-    else if(keyValidation == IsKeyValid.PARTLY_VALID){
-        keyStyle = keyStyle.concat(" bg-orange-500")
-    }
-    else if(keyValidation == IsKeyValid.NOT_VALID){
-        keyStyle = keyStyle.concat(" bg-gray-700")
-    }
-    else{
-        keyStyle = keyStyle.concat(" bg-gray-500")
-    }
+    const baseStyle = "p-1 m-1 cursor-pointer text-[90%] w-[8%] aspect-square";
+    const keyStyle = `${baseStyle} ${
+        keyValidation === IsKeyValid.VALID
+        ? "bg-green-600"
+        : keyValidation === IsKeyValid.PARTLY_VALID
+        ? "bg-orange-500"
+        : keyValidation === IsKeyValid.NOT_VALID
+        ? "bg-gray-700"
+        : "bg-gray-500"
+    }`;
 
     return(
-         <div className={keyStyle} onClick={() => passValue(value)}>{value}</div>
+         <div className={keyStyle} onClick={() => passValue(value)}>{value.toUpperCase()}</div>
     )
   
 }
@@ -42,7 +39,7 @@ interface DeleteKeyProps{
 
 export function DeleteKey({value, deleteValue}: DeleteKeyProps){
     return(
-        <div className="p-2 cursor-pointer" onClick={() => deleteValue()}>{value}</div>
+        <div className="p-1 m-1 cursor-pointer bg-gray-500 text-[90%] w-[20%]" onClick={() => deleteValue()}>{value}</div>
     )
 }
 
@@ -53,6 +50,6 @@ interface EnterValueProps{
 
 export function EnterKey({value, enterValue}: EnterValueProps){
     return(
-        <div className="p-2 cursor-pointer" onClick={() => enterValue()}>{value}</div>
+        <div className="p-1 m-1 cursor-pointer bg-gray-500 text-[90%] w-[20%]" onClick={() => enterValue()}>{value}</div>
     )
 }

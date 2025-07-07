@@ -48,8 +48,8 @@ export default function Card({id, cardLetter, flip, color}: cardProps){
 
         <div className={' w-[20%] aspect-square m-2 flip-card items-center flex justify-center text-2xl'}>
             <div className={cardInnnerStyle}>
-                <div className={"flip-card-front items-center justify-center content-center"}>{cardLetter}</div>
-                <div className={"flip-card-back"}>{cardLetter}</div>
+                <div className={"flip-card-front items-center justify-center content-center"}>{cardLetter ? cardLetter.toUpperCase() : ""}</div>
+                <div className={"flip-card-back content-center"}>{cardLetter ? cardLetter.toUpperCase() : ""}</div>
             </div>
         </div>
         

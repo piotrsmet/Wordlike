@@ -3,14 +3,13 @@ import { useState } from 'react';
 import type { IsKeyValid } from './Key';
 
 interface RowProps{
-    id: number,
     letters: string[],
     flip: boolean,
     answerColors: IsKeyValid[]
 }
 
 
-export default function Row({id, letters, flip, answerColors}: RowProps){ 
+export default function Row({letters, flip, answerColors}: RowProps){ 
     return(
         <div className='flex w-100%'>
             <Card id = {0} cardLetter={letters[0]} flip={flip} color={answerColors[0]}/>

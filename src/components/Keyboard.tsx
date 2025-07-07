@@ -1,25 +1,34 @@
-
 import {DeleteKey, EnterKey, IsKeyValid, Key} from "./Key";
-import React, {createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useEffect, useState } from "react";
+import { WordleContext } from "./Wordle";
+import words from "../assets/words.txt"
 
-
-interface keyboardProps{
-  input: [string[], React.Dispatch<React.SetStateAction<string[]>>],
-  currentRowId: [number, React.Dispatch<React.SetStateAction<number>>],
-  allRows: [string[][], React.Dispatch<React.SetStateAction<string[][]>>],
-  flipRows: [boolean[], React.Dispatch<React.SetStateAction<boolean[]>>],
-  cardColors: [IsKeyValid[][], React.Dispatch<React.SetStateAction<IsKeyValid[][]>>]
-}
-
-export function Keyboard({input, currentRowId, allRows, flipRows, cardColors}: keyboardProps) {
+export function Keyboard() {
+  const context = useContext(WordleContext)!
+  const input = context?.input
+  const currentRowId = context?.currentRowId
+  const allRows = context?.allRows
+  const flipRows = context?.flipRows
+  const cardColors = context?.cardColors
+  const [answer, setAnswer] = useState("adieu")
+  const randomWord = Math.floor(Math.random() * 13000)
   
+  useEffect(() =>{
+    fetch(words)
+      .then(r => r.text())
+      .then(text => {setAnswer(text.split('\n')[randomWord])})
+      
+    }, []
+  )
 
+  
   const keys: string[][] = [
     ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
     ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
     ["z", "x", "c", "v", "b", "n", "m"]
-  ];
-  const answer = "abcde"
+  ]; 
+
+  
   let keyColorMap = new Map<string, IsKeyValid>(
     keys.flat().map((key) => [key, IsKeyValid.UNKNOWN])
   );
@@ -56,63 +65,79 @@ export function Keyboard({input, currentRowId, allRows, flipRows, cardColors}: k
     }
   }
 
-  const handleEnterValue = (): void => {
-    if(currentRowId[0] < 5 && input[0].length == 5){
+  const handleEnterValue = async (): Promise<void> => {
+  if (currentRowId[0] < 5 && input[0].length === 5) {
+    const guess = input[0].join("")
+    const response = await fetch(`https://wordle-api-kappa.vercel.app/${guess}`, {
+      method: "POST",
+    });
 
-      keyColorMap = keysColors
-
-      input[0].forEach((letter, index) => {
-
-        if(answer.search(letter) !== -1){
-          cardColors[1]((prev) => {prev[currentRowId[0]][index] = IsKeyValid.PARTLY_VALID; return prev})
-        }
-        
-        if(letter == answer[index]){
-          console.log("valid")
-          keyColorMap.set(letter, IsKeyValid.VALID)
-          cardColors[1]((prev) => {prev[currentRowId[0]][index] = IsKeyValid.VALID; return prev})
-        }
-        if(keysColors.get(letter) !== IsKeyValid.VALID){
-          if(answer.search(letter) !== -1){
-            keyColorMap.set(letter, IsKeyValid.PARTLY_VALID)
-          }
-          else{
-            keyColorMap.set(letter, IsKeyValid.NOT_VALID)
-          }
-        }
-        
-        setKeyColors(keyColorMap)
-      })
-      
-      flipRows[1]((prev) => {prev[currentRowId[0]] = true; return prev})
-      console.log(flipRows[0])
-
-      currentRowId[1](currentRowId[0]+1)
-      input[1]([])
-      
-
+    const data = await response.json();
+    if (!data.is_word_in_list) {
+      return
     }
-    
+
+    keyColorMap = keysColors;
+
+    input[0].forEach((letter, index) => {
+      if (answer.includes(letter)) {
+        cardColors[1]((prev) => {
+          const updated = [...prev]
+          updated[currentRowId[0]][index] = IsKeyValid.PARTLY_VALID
+          return updated
+        });
+      }
+
+      if (letter === answer[index]) {
+        keyColorMap.set(letter, IsKeyValid.VALID)
+        cardColors[1]((prev) => {
+          const updated = [...prev]
+          updated[currentRowId[0]][index] = IsKeyValid.VALID
+          return updated;
+        })
+      }
+
+      if (keysColors.get(letter) !== IsKeyValid.VALID) {
+        if (answer.includes(letter)) {
+          keyColorMap.set(letter, IsKeyValid.PARTLY_VALID)
+        } else {
+          keyColorMap.set(letter, IsKeyValid.NOT_VALID)
+        }
+      }
+
+      setKeyColors(new Map(keyColorMap));
+    });
+
+    flipRows[1]((prev) => {
+      const updated = [...prev]
+      updated[currentRowId[0]] = true
+      return updated;
+    });
+
+    currentRowId[1](currentRowId[0] + 1)
+    input[1]([])
   }
+};
+
 
 
 
   return (
-    <div className="flex-col justify-center text-[20px] w-[100%px] mt-3">
+    <div className='flex-col justify-center text-[20px] w-[100%px] mt-3 h-[170px]'>
         {
-          keys.map((arr) => 
-            <div className="flex justify-center">
+          keys.map((arr, index) => 
+            <div className="flex justify-center h-[30%]" key={`row-${index}`}>
               {
-                arr.length == 7 && <EnterKey value="en" enterValue={handleEnterValue}/>
+                arr.length == 7 && <EnterKey value="ENTER" enterValue={handleEnterValue}/>
               }
               {
-                arr.map((key) =>
-                  <Key value={key} passValue={handlePassValue} keyValidation={keysColors.get(key) ?? IsKeyValid.UNKNOWN}/>
+                arr.map((key, letterIndex) =>
+                  <Key key={`key-${letterIndex}`} value={key} passValue={handlePassValue} keyValidation={keysColors.get(key) ?? IsKeyValid.UNKNOWN}/>
                   
                 )
               }
               {
-                arr.length == 7 && <DeleteKey value={"xx"} deleteValue={handleDeleteValue}/> 
+                arr.length == 7 && <DeleteKey value={"DELETE"} deleteValue={handleDeleteValue}/> 
               }
               
             </div>
