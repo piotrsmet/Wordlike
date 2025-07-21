@@ -21,6 +21,7 @@
 .flip-card {
   background-color: transparent;
   perspective: 1000px;
+  color: white !important;
 }
 
 .flip-card-inner {
@@ -63,7 +64,6 @@
 
 .flip-card-front {
   background-color: #bbb;
-  color: black;
 }
 
 .flip-card-back {

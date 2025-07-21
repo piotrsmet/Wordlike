@@ -34,18 +34,21 @@ export function Wordle(){
     cardColors: [answerColors, setAnswerColors]
     }
     return (
-        <>
-          <div className=' w-[clamp(350px,60vw,500px)]'>
-            <WordleContext.Provider value={contextValue}>
-              <Row letters={allRows[0]} flip={flipRow[0]} answerColors={answerColors[0]}/>
-              <Row letters={allRows[1]} flip={flipRow[1]} answerColors={answerColors[1]}/>
-              <Row letters={allRows[2]} flip={flipRow[2]} answerColors={answerColors[2]}/>
-              <Row letters={allRows[3]} flip={flipRow[3]} answerColors={answerColors[3]}/>
-              <Row letters={allRows[4]} flip={flipRow[4]} answerColors={answerColors[4]}/>
-              <Keyboard/>
-            </WordleContext.Provider>
-          </div>
-          
-        </>
-      )
+      <>
+        <div className='flex flex-col items-center justify-center min-h-screen text-white'>
+          <WordleContext.Provider value={contextValue}>
+            <div className='w-[clamp(350px,60vw,500px)]'>
+              
+                <Row letters={allRows[0]} flip={flipRow[0]} answerColors={answerColors[0]}/>
+                <Row letters={allRows[1]} flip={flipRow[1]} answerColors={answerColors[1]}/>
+                <Row letters={allRows[2]} flip={flipRow[2]} answerColors={answerColors[2]}/>
+                <Row letters={allRows[3]} flip={flipRow[3]} answerColors={answerColors[3]}/>
+                <Row letters={allRows[4]} flip={flipRow[4]} answerColors={answerColors[4]}/>
+                <Keyboard />
+              
+            </div>
+          </WordleContext.Provider>
+        </div>
+      </>
+  )
 }
