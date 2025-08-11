@@ -9,6 +9,9 @@ interface cardProps {
 }
 
 export default function Card({ id, cardLetter, flip, color }: cardProps) {
+
+	
+
 	let cardInnnerStyle =
 		'flip-card-inner items-center justify-center font-bold '
 	switch (id) {
@@ -50,7 +53,7 @@ export default function Card({ id, cardLetter, flip, color }: cardProps) {
 			<div className={cardInnnerStyle}>
 				<div
 					className={
-						'flip-card-front items-center justify-center content-center'
+						'flip-card-front items-center justify-center content-center rounded-[8px]'
 					}
 				>
 					{cardLetter ? cardLetter.toUpperCase() : ''}

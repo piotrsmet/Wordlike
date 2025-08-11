@@ -1,5 +1,5 @@
 import { motion, useAnimation } from 'framer-motion'
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 interface toastProps {
 	text: string
 	show: boolean

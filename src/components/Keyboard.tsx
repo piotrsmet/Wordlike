@@ -12,19 +12,34 @@ export function Keyboard() {
 	const allRows = context?.allRows
 	const flipRows = context?.flipRows
 	const cardColors = context?.cardColors
+	const finished = context?.finished
+	const restart = context?.restart
+
 	const [answer, setAnswer] = useState('adieu')
 	const randomWord = Math.floor(Math.random() * 13000)
 	const [allWords, setAllWords] = useState<String[]>([])
 	const [showToast, setShowToast] = useState(false)
+
 
 	useEffect(() => {
 		fetch(words)
 			.then(r => r.text())
 			.then(text => {
 				setAnswer(text.split('\n')[randomWord])
+				console.log(text.split('\n')[randomWord])
+				context?.word[1](text.split('\n')[randomWord])
 				setAllWords(text.split('\n'))
 			})
+
 	}, [])
+
+	useEffect(() =>{
+		if(currentRowId[0] == 5 || (currentRowId[0] != 0 && cardColors[0][currentRowId[0]-1].every(x =>x == IsKeyValid.VALID))){
+			finished[1](true)
+		}
+	}, [currentRowId, cardColors])
+
+	
 
 	const keys: string[][] = [
 		['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -71,19 +86,15 @@ export function Keyboard() {
 
 	//Funkcja ustawiająca kolory kafelków
 	const setColors = () => {
-		let checkedColors = new Map<String, number>()
-		for (let i = 0; i < 5; i++) {
-			if (checkedColors.get(answer[i]) === undefined) {
-				checkedColors.set(answer[i], 1)
-			} else {
-				checkedColors.set(
-					input[0][i],
-					checkedColors.get(input[0][i])! + 1
-				)
-			}
-		}
-		console.log(checkedColors)
+		let checkedColors = new Map<string, number>()
 
+		
+		for (let i = 0; i < 5; i++) {
+			const char = answer[i]
+			checkedColors.set(char, (checkedColors.get(char) || 0) + 1)
+		}
+
+		
 		for (let i = 0; i < 5; i++) {
 			if (input[0][i] === answer[i]) {
 				cardColors[1](prev => {
@@ -98,11 +109,12 @@ export function Keyboard() {
 			}
 		}
 
+		
 		for (let i = 0; i < 5; i++) {
 			if (
+				input[0][i] !== answer[i] &&
 				answer.includes(input[0][i]) &&
-				checkedColors.get(input[0][i]) !== 0 &&
-				input[0][i] !== answer[i]
+				checkedColors.get(input[0][i])! > 0
 			) {
 				cardColors[1](prev => {
 					const updated = [...prev]
