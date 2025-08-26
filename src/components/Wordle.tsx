@@ -77,7 +77,25 @@ export function Wordle() {
 
 	useEffect(() => {
 		if(restart == true){
-		window.location.reload()
+			setRestart(false)
+			setWord("")
+			setFinished(false)
+			setFlipRow([
+				false,
+				false,
+				false,
+				false,
+			])
+			setAllRows([[], [], [], [], []])
+			setCurrentRow(0)
+			setText([])
+			setAnswerColors([
+				[IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN],
+				[IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN],
+				[IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN],
+				[IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN],
+				[IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN, IsKeyValid.UNKNOWN],
+			])
 		}
 	}, [restart])
 

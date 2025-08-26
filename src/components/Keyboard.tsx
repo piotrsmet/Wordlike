@@ -14,7 +14,6 @@ export function Keyboard() {
 	const cardColors = context?.cardColors
 	const finished = context?.finished
 	const restart = context?.restart
-
 	const [answer, setAnswer] = useState('adieu')
 	const randomWord = Math.floor(Math.random() * 13000)
 	const [allWords, setAllWords] = useState<String[]>([])
@@ -52,6 +51,21 @@ export function Keyboard() {
 	)
 
 	const [keysColors, setKeyColors] = useState(keyColorMap)
+
+	useEffect(() => {
+			if(restart[0] == true){
+				setKeyColors(keyColorMap)
+				const randomWord = Math.floor(Math.random() * 13000)
+				fetch(words)
+					.then(r => r.text())
+					.then(text => {
+						setAnswer(text.split('\n')[randomWord])
+						console.log(text.split('\n')[randomWord])
+						context?.word[1](text.split('\n')[randomWord])
+						setAllWords(text.split('\n'))
+					})
+			}
+		}, [restart])
 
 	//Funkcja obsługująca wpisywanie liter
 	const handlePassValue = (value: string): void => {
