@@ -185,7 +185,7 @@ export function Keyboard() {
 	}
 
 	return (
-		<div className='flex flex-col justify-center text-base sm:text-[20px] mt-3 gap-2 cursor-pointer w-full'>
+		<div className='flex flex-col justify-center text-xs sm:text-[20px] mt-1.5 sm:mt-3 gap-0.5 sm:gap-2 cursor-pointer w-full'>
 			{keys.map((arr, index) => (
 				<div
 					className='flex justify-center gap-1 w-full'

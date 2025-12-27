@@ -14,7 +14,7 @@ interface KeyProps {
 
 export function Key({ value, passValue, keyValidation }: KeyProps) {
   const baseStyle =
-	'flex-1 min-w-[40px] h-12 sm:h-auto m-0.5 sm:m-1 cursor-pointer text-sm sm:text-[90%] w-auto sm:w-[8%] aspect-square sm:aspect-square rounded-sm font-bold shadow-sm flex items-center justify-center '
+  'flex-1 min-w-[32px] h-12 sm:h-14 m-0.5 sm:m-1 cursor-pointer text-xs sm:text-[90%] w-auto sm:w-[8%] rounded-sm font-bold shadow-sm flex items-center justify-center '
   const keyStyle = `${baseStyle} ${
     keyValidation === IsKeyValid.VALID
       ? 'bg-[#A1D6B2]'
@@ -40,7 +40,7 @@ interface DeleteKeyProps {
 export function DeleteKey({ value, deleteValue }: DeleteKeyProps) {
   return (
     <div
-    className='flex-[1.5] sm:flex-none min-w-[60px] h-12 sm:h-auto p-1 m-0.5 sm:m-1 cursor-pointer bg-[#9FB3DF] text-xs sm:text-[90%] w-auto sm:w-[20%] rounded-sm font-bold shadow-sm flex items-center justify-center'
+    className='flex-[1.4] sm:flex-none min-w-[48px] h-12 sm:h-14 p-1 m-0.5 sm:m-1 cursor-pointer bg-[#9FB3DF] text-xs sm:text-[90%] w-auto sm:w-[20%] rounded-sm font-bold shadow-sm flex items-center justify-center'
       onClick={() => deleteValue()}
     >
       {value}
@@ -56,7 +56,7 @@ interface EnterValueProps {
 export function EnterKey({ value, enterValue }: EnterValueProps) {
   return (
     <div
-    className='flex-[1.5] sm:flex-none min-w-[60px] h-12 sm:h-auto p-1 m-0.5 sm:m-1 cursor-pointer bg-[#9FB3DF] text-xs sm:text-[90%] w-auto sm:w-[20%] rounded-sm font-bold shadow-sm flex items-center justify-center'
+    className='flex-[1.4] sm:flex-none min-w-[48px] h-12 sm:h-14 p-1 m-0.5 sm:m-1 cursor-pointer bg-[#9FB3DF] text-xs sm:text-[90%] w-auto sm:w-[20%] rounded-sm font-bold shadow-sm flex items-center justify-center'
       onClick={() => enterValue()}
     >
       {value}
