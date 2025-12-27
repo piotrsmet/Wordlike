@@ -114,7 +114,7 @@ export function Wordle() {
 		<>
 			<div className='flex flex-col items-center justify-center min-h-screen text-white select-none'>
 				<WordleContext.Provider value={contextValue}>
-					<div className='w-[clamp(320px,55vw,480px)] px-2 sm:px-3'>
+					<div className='w-[clamp(280px,50vw,420px)] px-2 sm:px-3'>
 						<Row
 							letters={allRows[0]}
 							flip={flipRow[0]}
