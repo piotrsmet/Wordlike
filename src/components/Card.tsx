@@ -47,7 +47,7 @@ export default function Card({ id, cardLetter, flip, color }: cardProps) {
 	return (
 		<div
 			className={
-				' w-[20%] aspect-square m-2 flip-card items-center flex justify-center text-2xl'
+				' w-[20%] min-w-[52px] aspect-square m-1 sm:m-2 flip-card items-center flex justify-center text-2xl'
 			}
 		>
 			<div className={cardInnnerStyle}>

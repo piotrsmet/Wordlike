@@ -10,7 +10,7 @@ interface RowProps{
 
 export default function Row({letters, flip, answerColors}: RowProps){ 
     return(
-        <div className='flex w-100%'>
+		<div className='flex w-full justify-center'>
             <Card id = {0} cardLetter={letters[0]} flip={flip} color={answerColors[0]}/>
             <Card id = {1} cardLetter={letters[1]} flip={flip} color={answerColors[1]}/>
             <Card id = {2} cardLetter={letters[2]} flip={flip} color={answerColors[2]}/>
